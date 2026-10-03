@@ -1,0 +1,17 @@
+{
+  "maintenance": {
+    "enabled": false,
+    "message": "We are making some updates. The store will be back shortly.",
+    "eta": ""
+  },
+  "notice": {
+    "enabled": false,
+    "type": "info",
+    "text": "",
+    "link": {
+      "label": "",
+      "url": ""
+    }
+  },
+  "updated": ""
+}
