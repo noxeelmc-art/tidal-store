@@ -77,7 +77,8 @@ canvas{image-rendering:pixelated;display:block}
 .wide{grid-column:span 2}
 @media(min-width:520px){.wide{display:grid;grid-template-columns:1fr 1.2fr}.wide .scene{min-height:300px;border-bottom:0;border-right:1px solid var(--line)}}
 .wide .scene{min-height:260px}
-.cmp{display:flex;gap:10px}.cmp div{background:rgba(7,11,18,.62);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:center;white-space:nowrap;font:700 25px/1.2 var(--fh);letter-spacing:.02em}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,320px)}.cmp div{min-width:0;background:rgba(7,11,18,.62);border:1px solid var(--line);border-radius:10px;padding:12px 8px;text-align:center;white-space:nowrap;font:700 20px/1.2 var(--fh);font:700 clamp(16px,6.4cqw,25px)/1.2 var(--fh);letter-spacing:.02em}
+@media(max-width:759px){.util{grid-column:span 2}}
 .cmp small{display:block;font:500 12px var(--fb);color:var(--muted);letter-spacing:0;margin-bottom:2px}.cmp div+div{border-color:rgba(43,208,228,.5);color:var(--acc)}
 .sug{grid-column:span 2;border-style:dashed;background:transparent;box-shadow:none;justify-content:center}.sug:hover{transform:none}.sug .info{justify-content:center;gap:8px}
 @media(min-width:760px){.sug{grid-column:auto}}
@@ -208,7 +209,7 @@ const PROD=[{id:"tide",cat:"ranks",n:"Tide",p:4.99,txt:"[Tide]",col:"#4ab3ee",tl
 const get=id=>PROD.find(p=>p.id===id);
 const nm=p=>`<div class="nm"><span style="color:${p.col}">${p.custom?'[<span class="ct">Yours</span>]':p.txt}</span><span class="gt"></span></div>`;
 $("#grid").innerHTML=PROD.map(p=>{const wide=p.cat==="ranks",tint=(p.col||"#2bd0e4")+"30";
-const scene=p.cat==="utility"?`<div class="scene" style="--tint:${tint};flex-direction:row;justify-content:center;align-items:center;padding:22px 12px"><div class="cmp"><div><small>Before</small>128 kills<br>54 deaths</div><div><small>After</small>0 kills<br>0 deaths</div></div></div>`:`<div class="scene${wide?" img":""}" style="--tint:${tint}">${nm(p)}${wide?'<canvas data-m="full" data-s="7" width="112" height="224"></canvas>':'<canvas data-m="head" data-s="8" width="64" height="64"></canvas>'}</div>`;
+const scene=p.cat==="utility"?`<div class="scene" style="--tint:${tint};flex-direction:row;justify-content:center;align-items:center;padding:22px 12px;container-type:inline-size"><div class="cmp"><div><small>Before</small>128 kills<br>54 deaths</div><div><small>After</small>0 kills<br>0 deaths</div></div></div>`:`<div class="scene${wide?" img":""}" style="--tint:${tint}">${nm(p)}${wide?'<canvas data-m="full" data-s="7" width="112" height="224"></canvas>':'<canvas data-m="head" data-s="8" width="64" height="64"></canvas>'}</div>`;
 return `<article class="card${wide?" wide":""}${p.cat==="utility"?" util":""}" data-cat="${p.cat}">${scene}<div class="info"><h3>${p.n}</h3><p class="tl">${p.tl||(p.cat==="tags"?"Chat tag":"")}</p>${p.custom?'<input class="cin" maxlength="10" placeholder="Your tag text" aria-label="Custom tag text">':""}${wide?`<div class="chat">&lt;<span style="color:${p.col}">[Tide]</span> <span class="gt"></span>&gt; gg</div>`:""}<div class="buy"><span class="price">$${p.p.toFixed(2)}</span><button class="btn sm add" type="button" data-id="${p.id}">Add to basket</button></div></div></article>`}).join("");
 $("#grid").insertAdjacentHTML("beforeend",'<article class="card sug" data-cat="utility"><div class="info"><h3>Need something else?</h3><p class="tl">Ask in our Discord and the team will help.</p><div class="buy"><a class="btn sm dc" href="https://discord.tidalpvp.com">Join our Discord</a></div></div></article>');
 const W=(n,i)=>`<svg viewBox="0 0 52 32" role="img" aria-label="${n}"><rect x=".5" y=".5" width="51" height="31" rx="5" fill="#fff" stroke="#d0d5dd"/>${i}</svg>`;
