@@ -77,6 +77,22 @@ canvas{image-rendering:pixelated;display:block}
 .wide{grid-column:span 2}
 @media(min-width:520px){.wide{display:grid;grid-template-columns:1fr 1.2fr}.wide .scene{min-height:300px;border-bottom:0;border-right:1px solid var(--line)}}
 .wide .scene{min-height:260px}
+.cmp{display:flex;gap:10px}.cmp div{background:rgba(7,11,18,.62);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:center;white-space:nowrap;font:700 25px/1.2 var(--fh);letter-spacing:.02em}
+.cmp small{display:block;font:500 12px var(--fb);color:var(--muted);letter-spacing:0;margin-bottom:2px}.cmp div+div{border-color:rgba(43,208,228,.5);color:var(--acc)}
+.sug{grid-column:span 2;border-style:dashed;background:transparent;box-shadow:none;justify-content:center}.sug:hover{transform:none}.sug .info{justify-content:center;gap:8px}
+@media(min-width:760px){.sug{grid-column:auto}}
+.few .util{grid-column:span 2}.few .sug{grid-column:auto}
+@media(max-width:759px){.few .sug{grid-column:span 2}}
+@media(min-width:520px){.few .util{display:grid;grid-template-columns:1fr 1.2fr}.few .util .scene{min-height:260px;border-bottom:0;border-right:1px solid var(--line)}}
+.sup{display:grid;gap:18px}@media(min-width:760px){.sup{grid-template-columns:1fr 1.8fr}}
+.tcard{align-items:center;justify-content:center;text-align:center;padding:28px 20px;gap:6px;background:radial-gradient(ellipse at 50% 0,rgba(255,207,74,.15),transparent 70%),linear-gradient(var(--s2),var(--s1))}
+.tcard canvas{width:72px;height:72px;border-radius:8px;border:2px solid rgba(255,207,74,.55);margin:8px 0 4px}
+.badge{font:700 12px var(--fb);letter-spacing:.08em;text-transform:uppercase;color:#2a1c00;background:linear-gradient(#ffd96b,#e9a91f);border-radius:99px;padding:4px 12px}
+.tcard h3{font-size:36px;line-height:1}
+.rec{padding:4px 18px}.rec ul{list-style:none;margin:0;padding:0}
+.rec li{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.rec li:last-child{border-bottom:0}
+.rec canvas{width:36px;height:36px;border-radius:6px;flex:none}
+.rec li div{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}.rec b{font-weight:600}.rec span{color:var(--muted);font-size:14px}.rec time{color:var(--muted);font-size:13px;white-space:nowrap}
 .steps{display:grid;gap:16px;margin-top:22px}@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
 .step{display:flex;gap:14px;padding:18px;background:var(--s1);border:1px solid var(--line);border-radius:12px}
 .step i{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(43,208,228,.12);color:var(--acc);font:700 14px var(--fb);font-style:normal;border:1px solid rgba(43,208,228,.35)}
@@ -131,6 +147,10 @@ footer p{margin:6px 0;max-width:74ch}footer a{color:var(--acc);margin-right:16px
     <div class="grid" id="grid"></div>
   </section>
 
+  <section class="sec" id="supporters"><div class="head"><div><h2>Recent supporters</h2><p class="sub">The people keeping Tidal running.</p></div></div>
+    <div class="sup"><div class="card tcard"><span class="badge">Top customer</span><canvas id="tc" width="72" height="72"></canvas><h3 id="tn"></h3><p class="tl">Paid the most this month.</p></div>
+    <div class="card rec"><ul id="rl"></ul></div></div></section>
+
   <section class="sec" id="how"><h2>How buying works</h2>
     <div class="steps">
       <div class="step"><i>1</i><div><b>Enter your gamertag</b><p>The Xbox name you play with. No login needed.</p></div></div>
@@ -148,7 +168,7 @@ footer p{margin:6px 0;max-width:74ch}footer a{color:var(--acc);margin-right:16px
   <div class="pay"></div>
   <p>This website and its checkout process is owned &amp; operated by Tebex Limited, who handle product fulfilment, billing support and refunds.</p>
   <p><a href="#">Impressum</a><a href="#">Terms &amp; Conditions</a><a href="#">Privacy Policy</a></p>
-  <p>Concept redesign. Tag looks, perks and stat numbers shown are samples.</p>
+  <p>Concept redesign. Tag looks, perks, stat numbers and supporter names shown are samples.</p>
 </div></footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -184,12 +204,13 @@ const D=(sx,sy,w,h,dx,dy,f)=>{x.save();if(f){x.translate((dx+w)*s,dy*s);x.scale(
 if(mode==="head"){D(8,8,8,8,0,0);D(40,8,8,8,0,0);return}
 D(4,20,4,12,4,20);D(m?4:20,m?20:52,4,12,8,20,m);D(20,20,8,12,4,8);D(44,20,4,12,0,8);D(m?44:36,m?20:52,4,12,12,8,m);D(8,8,8,8,4,0);
 if(!m){D(4,36,4,12,4,20);D(4,52,4,12,8,20);D(20,36,8,12,4,8);D(44,36,4,12,0,8);D(52,52,4,12,12,8)}D(40,8,8,8,4,0)}
-const PROD=[{id:"tide",cat:"ranks",n:"Tide",p:4.99,txt:"[Tide]",col:"#4ab3ee",tl:"Shows in chat and above your head."},{id:"custom",cat:"tags",n:"Custom",p:2.99,custom:1,col:"#ffcf4a",tl:"Write your own tag."},{id:"tidal",cat:"tags",n:"Tidal",p:1,txt:"[Tidal]",col:"#4ab3ee"},{id:"eboy",cat:"tags",n:"E-Boy",p:1,txt:"[E-Boy]",col:"#a98bff"},{id:"egirl",cat:"tags",n:"E-Girl",p:1,txt:"[E-Girl]",col:"#ff7ac8"},{id:"anime",cat:"tags",n:"Anime",p:1,txt:"[Anime]",col:"#ff9ad5"},{id:"heart",cat:"tags",n:"Heart",p:1,txt:"\u2665",col:"#ff4d5e"},{id:"abyss",cat:"tags",n:"ABYSS",p:1,txt:"[ABYSS]",col:"#7a8bff"},{id:"stier",cat:"tags",n:"S-tier",p:1,txt:"[S]",col:"#ffcf4a"},{id:"stats",cat:"utility",n:"Statistics Reset",p:2.99,tl:"Reset your PvP statistics."}];
+const PROD=[{id:"tide",cat:"ranks",n:"Tide",p:4.99,txt:"[Tide]",col:"#4ab3ee",tl:"Shows in chat and above your head."},{id:"custom",cat:"tags",n:"Custom",p:2.99,custom:1,col:"#ffcf4a",tl:"Write your own tag."},{id:"tidal",cat:"tags",n:"Tidal",p:1,txt:"[Tidal]",col:"#4ab3ee"},{id:"eboy",cat:"tags",n:"E-Boy",p:1,txt:"[E-Boy]",col:"#a98bff"},{id:"egirl",cat:"tags",n:"E-Girl",p:1,txt:"[E-Girl]",col:"#ff7ac8"},{id:"anime",cat:"tags",n:"Anime",p:1,txt:"[Anime]",col:"#ff9ad5"},{id:"heart",cat:"tags",n:"Heart",p:1,txt:"\u2665",col:"#ff4d5e"},{id:"abyss",cat:"tags",n:"ABYSS",p:1,txt:"[ABYSS]",col:"#7a8bff"},{id:"stier",cat:"tags",n:"S-tier",p:1,txt:"[S]",col:"#ffcf4a"},{id:"stats",cat:"utility",n:"Statistics Reset",p:2.99,tl:"Resets your PvP statistics to zero. This can't be undone."}];
 const get=id=>PROD.find(p=>p.id===id);
 const nm=p=>`<div class="nm"><span style="color:${p.col}">${p.custom?'[<span class="ct">Yours</span>]':p.txt}</span><span class="gt"></span></div>`;
 $("#grid").innerHTML=PROD.map(p=>{const wide=p.cat==="ranks",tint=(p.col||"#2bd0e4")+"30";
-const scene=p.cat==="utility"?`<div class="scene" style="--tint:${tint};flex-direction:row;justify-content:center;align-items:center;gap:26px;padding:16px 8px;font:700 22px/1.15 var(--fh);text-align:center"><div><small style="font:500 12px var(--fb);color:#93a4b8">Before</small><br>128 kills<br>54 deaths</div><div style="color:var(--acc)"><small style="font:500 12px var(--fb);color:#93a4b8">After</small><br>0 kills<br>0 deaths</div></div>`:`<div class="scene${wide?" img":""}" style="--tint:${tint}">${nm(p)}${wide?'<canvas data-m="full" data-s="7" width="112" height="224"></canvas>':'<canvas data-m="head" data-s="8" width="64" height="64"></canvas>'}</div>`;
-return `<article class="card${wide?" wide":""}" data-cat="${p.cat}">${scene}<div class="info"><h3>${p.n}</h3><p class="tl">${p.tl||(p.cat==="tags"?"Chat tag":"")}</p>${p.custom?'<input class="cin" maxlength="10" placeholder="Your tag text" aria-label="Custom tag text">':""}${wide?`<div class="chat">&lt;<span style="color:${p.col}">[Tide]</span> <span class="gt"></span>&gt; gg</div>`:""}<div class="buy"><span class="price">$${p.p.toFixed(2)}</span><button class="btn sm add" type="button" data-id="${p.id}">Add to basket</button></div></div></article>`}).join("");
+const scene=p.cat==="utility"?`<div class="scene" style="--tint:${tint};flex-direction:row;justify-content:center;align-items:center;padding:22px 12px"><div class="cmp"><div><small>Before</small>128 kills<br>54 deaths</div><div><small>After</small>0 kills<br>0 deaths</div></div></div>`:`<div class="scene${wide?" img":""}" style="--tint:${tint}">${nm(p)}${wide?'<canvas data-m="full" data-s="7" width="112" height="224"></canvas>':'<canvas data-m="head" data-s="8" width="64" height="64"></canvas>'}</div>`;
+return `<article class="card${wide?" wide":""}${p.cat==="utility"?" util":""}" data-cat="${p.cat}">${scene}<div class="info"><h3>${p.n}</h3><p class="tl">${p.tl||(p.cat==="tags"?"Chat tag":"")}</p>${p.custom?'<input class="cin" maxlength="10" placeholder="Your tag text" aria-label="Custom tag text">':""}${wide?`<div class="chat">&lt;<span style="color:${p.col}">[Tide]</span> <span class="gt"></span>&gt; gg</div>`:""}<div class="buy"><span class="price">$${p.p.toFixed(2)}</span><button class="btn sm add" type="button" data-id="${p.id}">Add to basket</button></div></div></article>`}).join("");
+$("#grid").insertAdjacentHTML("beforeend",'<article class="card sug" data-cat="utility"><div class="info"><h3>Need something else?</h3><p class="tl">Ask in our Discord and the team will help.</p><div class="buy"><a class="btn sm dc" href="https://discord.tidalpvp.com">Join our Discord</a></div></div></article>');
 const W=(n,i)=>`<svg viewBox="0 0 52 32" role="img" aria-label="${n}"><rect x=".5" y=".5" width="51" height="31" rx="5" fill="#fff" stroke="#d0d5dd"/>${i}</svg>`;
 const PAY=[W("Apple Pay",'<g transform="translate(7 7) scale(.72)" fill="#000"><path d="M17.05 12.6c0-2.4 2-3.5 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.15-2.9.9-3.7.9s-1.9-.85-3.1-.8c-1.6 0-3.1.95-3.9 2.4-1.7 2.9-.45 7.2 1.2 9.6.8 1.2 1.8 2.5 3 2.4 1.2-.05 1.7-.8 3.1-.8s1.9.8 3.1.75c1.3 0 2.1-1.2 2.9-2.3.9-1.3 1.3-2.6 1.3-2.7 0 0-2.5-1-2.5-3.9z"/><path d="M14.8 5.4c.65-.8 1.1-1.9 1-3-.95.05-2.1.65-2.8 1.45-.6.7-1.15 1.85-1 2.9 1.05.1 2.1-.5 2.8-1.35z"/></g><text x="25" y="20.6" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="600" fill="#000">Pay</text>'),
 W("Google Pay",'<g transform="translate(3 0)" fill="none" stroke-width="3"><path d="M18.5 16H12" stroke="#4285f4"/><path d="M18.5 16A6.5 6.5 0 0 1 16.6 20.6" stroke="#4285f4"/><path d="M16.6 20.6A6.5 6.5 0 0 1 7.4 20.6" stroke="#34a853"/><path d="M7.4 20.6A6.5 6.5 0 0 1 7.4 11.4" stroke="#fbbc05"/><path d="M7.4 11.4A6.5 6.5 0 0 1 16.6 11.4" stroke="#ea4335"/></g><text x="26" y="20.6" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#5f6368">Pay</text>'),
@@ -198,7 +219,7 @@ W("Visa",'<text x="26" y="21.4" text-anchor="middle" font-family="Arial,Helvetic
 W("American Express",'<rect x="4" y="6" width="44" height="20" rx="3" fill="#2e77bc"/><text x="26" y="20.4" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="800" fill="#fff" letter-spacing=".3">AMEX</text>')].join("");
 $$(".pay").forEach(e=>e.innerHTML=PAY);
 $(".cin").addEventListener("input",e=>{$$(".ct").forEach(c=>c.textContent=e.target.value.trim()||"Yours")});
-$$(".tab").forEach(t=>t.onclick=()=>{$$(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));const f=t.dataset.f;$$("#grid .card").forEach(c=>c.hidden=f!=="all"&&c.dataset.cat!==f)});
+$$(".tab").forEach(t=>t.onclick=()=>{$$(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));const f=t.dataset.f;$("#grid").classList.toggle("few",f==="utility");$$("#grid .card").forEach(c=>c.hidden=f!=="all"&&c.dataset.cat!==f)});
 let gt="",pending=null,basket=[];
 function render(){$$(".gt").forEach(e=>e.textContent=gt||"YourGamertag");$$("canvas[data-m]").forEach(c=>draw(c,skin,+c.dataset.s,c.dataset.m));$("#chipt").textContent=gt||"Set gamertag";$("#dfor").textContent=gt?"Delivering to "+gt:""}
 let tt;function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400)}
@@ -224,6 +245,10 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape")dr.classList.remove(
 $("#co").onclick=()=>toast(basket.length?"Checkout opens on Tebex in the live store":"Add something first");
 $("#ip").onclick=async()=>{const b=$("#ip"),o=b.textContent;try{await navigator.clipboard.writeText("tidalpvp.com");b.textContent="Copied"}catch(e){b.textContent="tidalpvp.com"}setTimeout(()=>b.textContent=o,1500)};
 try{const s=sessionStorage.getItem("gt");if(s){gt=s;loadSkin(s)}}catch(e){}
+const SUP=[{n:"ReefRunner",i:"Tide rank",t:"2 min ago",o:{skin:"#e8c3a0",hair:"#e6e6e6",shirt:"#d6537a",trim:"#ffcf4a",pants:"#4d3a2a",shoes:"#1a1410"}},{n:"SharkByte",i:"E-Boy tag",t:"14 min ago",o:{skin:"#d9a77f",hair:"#35271f",shirt:"#1fa0c9",trim:"#157a99",pants:"#14405e",shoes:"#0a1a26"}},{n:"NightTide",i:"Heart tag",t:"1 hour ago",o:{skin:"#8d5a3c",hair:"#15110f",shirt:"#6b4a9a",trim:"#4f3578",pants:"#2d2d3a",shoes:"#111"}},{n:"KelpKing",i:"Custom tag",t:"3 hours ago",o:{skin:"#f0c8a0",hair:"#ffcf4a",shirt:"#19b8a6",trim:"#0f8576",pants:"#3d3a5a",shoes:"#1d1a2a"}},{n:"DriftWood",i:"Statistics Reset",t:"Yesterday",o:{skin:"#c68a5c",hair:"#2f7d4f",shirt:"#e8a33d",trim:"#b97a1d",pants:"#1d3a4a",shoes:"#0d1a20"}}];
+$("#tn").textContent=SUP[0].n;draw($("#tc"),makeSkin(SUP[0].o),9,"head");
+$("#rl").innerHTML=SUP.map(s=>`<li><canvas width="32" height="32"></canvas><div><b>${s.n}</b><span>${s.i}</span></div><time>${s.t}</time></li>`).join("");
+$$("#rl canvas").forEach((c,i)=>draw(c,makeSkin(SUP[i].o),4,"head"));
 paint();render();
 </script>
 </body>
